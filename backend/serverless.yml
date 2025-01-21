@@ -1,10 +1,8 @@
-# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+# serverless
 org: ${env:SERVERLESS_ORG}
-# "app" enables Serverless Framework Dashboard features and sharing them with other Services.
-app: ${env:SERVERLESS_APP}
-# "service" is the name of this project. This will also be added to your AWS resource names.
 service: ${env:SERVERLESS_SERVICE}
 
+# aws
 provider:
   name: aws
   runtime: nodejs20.x
@@ -12,20 +10,20 @@ provider:
   iam:
     role: ${env:AWS_ROLE}
 
+# endpoints
 functions:
   app:
     handler: handler.handler
     events:
-      - httpApi:
-          path: /{proxy+}
-          method: ANY
+      - httpApi: "*"
 
+# db
 resources:
   Resources:
     firstTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${env:DB_TABLE_USERS}
+        TableName: ${env:TABLE_NAME_LOGIN}
         AttributeDefinitions:
           - AttributeName: username
             AttributeType: S
