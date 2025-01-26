@@ -1,29 +1,26 @@
-# serverless
 org: ${env:SERVERLESS_ORG}
+app: ${env:SERVERLESS_APP}
 service: ${env:SERVERLESS_SERVICE}
 
-# aws
 provider:
   name: aws
   runtime: nodejs20.x
-  region: eu-north-1
+  region: ${env:AWS_REGION}
   iam:
     role: ${env:AWS_ROLE}
 
-# endpoints
 functions:
-  app:
+  api:
     handler: handler.handler
     events:
       - httpApi: "*"
 
-# db
 resources:
   Resources:
-    firstTable:
+    users:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${env:TABLE_NAME_LOGIN}
+        TableName: ${env:DB_TABLE_USERS}
         AttributeDefinitions:
           - AttributeName: username
             AttributeType: S

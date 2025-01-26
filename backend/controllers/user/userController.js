@@ -1,56 +1,51 @@
-const express = require("express");
-const { db } = require("../../services/db/db");
-const { sendResponse, sendError } = require("../../services/response/response");
-const { ScanCommand } = require("@aws-sdk/lib-dynamodb");
-const dotenv = require("dotenv");
-dotenv.config();
+const { createUser, userExists } = require("../../services/user/userServices");
+const { comparePassword } = require("../../services/utils/bcrypt");
+const { generateToken } = require("../../services/utils/jwt");
+
+const signupUser = async (req, res) => {
+  const { username, password } = req.body;
+  console.log("Received signup request with username:", username);
+
+  try {
+    const existingUser = await userExists(username);
+    if (existingUser) {
+      console.log(`User ${username} already exists.`);
+      return res.status(400).json({ message: "User already exists" });
+    }
+
+    await createUser(username, password);
+
+    console.log(`User ${username} created successfully.`);
+    return res.status(201).json({ message: "User created successfully" });
+  } catch (err) {
+    console.error("Error in signup:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    return sendError(res, 400, "Username and Password are required");
-  }
-
   try {
-    const scanParams = {
-      TableName: process.env.TABLE_NAME_LOGIN,
-      FilterExpression: "#username = :username",
-      ExpressionAttributeNames: {
-        "#username": "username",
-      },
-      ExpressionAttributeValues: {
-        ":username": username,
-      },
-    };
-
-    const scanCommand = new ScanCommand(scanParams);
-    const result = await db.send(scanCommand);
-
-    if (!result.Items || result.Items.length === 0) {
-      return sendError(res, 404, "User not found");
+    const user = await userExists(username);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
     }
 
-    const user = result.Items[0];
-
-    if (password !== user.password) {
-      return sendError(res, 400, { error: "Invalid Password" });
+    const isPasswordValid = await comparePassword(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    return sendResponse(res, 200, {
-      success: true,
-      message: "Login successful",
-      username: user.username,
-    });
-  } catch (error) {
-    console.error("Problem with login:", error);
-    return sendError(res, 500, {
-      success: false,
-      error: "Problem with login",
-    });
+    const token = generateToken(user.username);
+
+    return res
+      .status(200)
+      .json({ message: "Login successful", token, username });
+  } catch (err) {
+    console.error("Error in login:", err);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-module.exports = {
-  loginUser,
-};
+module.exports = { signupUser, loginUser };
