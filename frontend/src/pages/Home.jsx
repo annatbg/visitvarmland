@@ -6,14 +6,26 @@ import { loginUser, signupUser } from "../hooks/api/authApi";
 
 function Home() {
   const [isLogin, setIsLogin] = useState(true);
-  const [formData, setFormData] = useState({ username: "", password: "" });
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    organisation: "",
+    firstName: "",
+    lastName: "",
+  });
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
   const { login } = useUser();
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
-    setFormData({ username: "", password: "" });
+    setFormData({
+      email: "",
+      password: "",
+      organisation: "",
+      firstName: "",
+      lastName: "",
+    });
     setMessage("");
   };
 
@@ -25,8 +37,8 @@ function Home() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const result = await loginUser(formData.username, formData.password);
-      login(result.username);
+      const result = await loginUser(formData.email, formData.password);
+      login(result.email);
       navigate("/user");
     } catch (error) {
       alert(error.message || "An error occurred while logging in.");
@@ -49,15 +61,15 @@ function Home() {
       {isLogin ? (
         <form onSubmit={handleLogin}>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="email">email:</label>
             <br />
             <input
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               required
               className="input-field"
-              value={formData.username}
+              value={formData.email}
               onChange={handleChange}
             />
           </div>
@@ -81,15 +93,15 @@ function Home() {
       ) : (
         <form onSubmit={handleSignup}>
           <div className="form-group">
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="email">email:</label>
             <br />
             <input
               type="text"
-              id="username"
-              name="username"
+              id="email"
+              name="email"
               required
               className="input-field"
-              value={formData.username}
+              value={formData.email}
               onChange={handleChange}
             />
           </div>
@@ -103,6 +115,45 @@ function Home() {
               required
               className="input-field"
               value={formData.password}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="organisation">Organisation:</label>
+            <br />
+            <input
+              type="text"
+              id="organisation"
+              name="organisation"
+              required
+              className="input-field"
+              value={formData.organisation}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="firstName">First Name:</label>
+            <br />
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              required
+              className="input-field"
+              value={formData.firstName}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name:</label>
+            <br />
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              required
+              className="input-field"
+              value={formData.lastName}
               onChange={handleChange}
             />
           </div>
