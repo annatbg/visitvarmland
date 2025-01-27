@@ -1,0 +1,27 @@
+Client-page
+
+header
+flytta upp 
+username + log out till topNav
+
+footer
+uppdatera info
+
+Home/ Start-view
+ska vara vår dashboard 
+(gör vi sist)
+senaste förändringar i demands
+senaste förändringar i matches
+
+Profile
+Presentera uppgifter
+uppdatera uppgifter
+ta bort konto
+
+Demands
+Skapa nytt demand
+se mina demands
+se lista över alla demands?
+
+Match
+Se alla matches man är inblandad i
