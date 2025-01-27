@@ -4,15 +4,15 @@ const db = require("../../services/db/db");
 const bcrypt = require("bcryptjs");
 const TABLE_NAME = process.env.DB_TABLE_USERS;
 
-const userExists = async (username) => {
+const userExists = async (email) => {
   const getParams = {
     TableName: TABLE_NAME,
-    Key: { username },
+    Key: { email },
   };
 
   try {
     const existingUser = await db.send(new GetCommand(getParams));
-    console.log(`User ${username} exists:`, existingUser.Item);
+    console.log(`User ${email} exists:`, existingUser.Item);
     return existingUser.Item;
   } catch (err) {
     console.error("Error checking if user exists:", err);
@@ -20,13 +20,13 @@ const userExists = async (username) => {
   }
 };
 
-const createUser = async (username, password) => {
-  console.log(`Creating new user with username: ${username}`);
+const createUser = async (email, password) => {
+  console.log(`Creating new user with email: ${email}`);
   const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(`Password hashed for user ${username}`);
+  console.log(`Password hashed for user ${email}`);
 
   const newUser = {
-    username,
+    email,
     password: hashedPassword,
   };
 
@@ -37,7 +37,7 @@ const createUser = async (username, password) => {
 
   try {
     await db.send(new PutCommand(putParams));
-    console.log(`User ${username} successfully created.`);
+    console.log(`User ${email} successfully created.`);
   } catch (err) {
     console.error("Error creating user:", err);
     throw new Error("Error creating user");
