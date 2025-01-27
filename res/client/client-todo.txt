@@ -7,11 +7,8 @@ username + log out till topNav
 footer
 uppdatera info
 
-Home/ Start-view
-ska vara vår dashboard 
-(gör vi sist)
-senaste förändringar i demands
-senaste förändringar i matches
+pageNav
+uppdatera rubriker + views
 
 Profile
 Presentera uppgifter
@@ -25,3 +22,9 @@ se lista över alla demands?
 
 Match
 Se alla matches man är inblandad i
+
+Home/ Start-view
+ska vara vår dashboard 
+(gör vi sist)
+senaste förändringar i demands
+senaste förändringar i matches
