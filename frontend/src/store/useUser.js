@@ -2,10 +2,12 @@ import { create } from "zustand";
 
 const useUser = create((set) => ({
   user: null,
+  role: null,
 
-  login: (userData) => set(() => ({ user: userData })),
+  login: (userData, userRole) =>
+    set(() => ({ user: userData, role: userRole })),
 
-  logout: () => set(() => ({ user: null })),
+  logout: () => set(() => ({ user: null, role: null })),
 }));
 
 export default useUser;

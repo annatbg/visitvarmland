@@ -44,7 +44,12 @@ const loginUser = async (req, res) => {
 
     const token = generateToken(user.email);
 
-    return res.status(200).json({ message: "Login successful", token, email });
+    return res.status(200).json({
+      message: "Login successful",
+      token,
+      email,
+      role: user.role,
+    });
   } catch (err) {
     console.error("Error in login:", err);
     return res.status(500).json({ message: "Internal server error" });
