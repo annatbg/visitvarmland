@@ -3,7 +3,7 @@ const { comparePassword } = require("../../services/utils/bcrypt");
 const { generateToken } = require("../../services/utils/jwt");
 
 const signupUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, organisation, firstName, lastName } = req.body;
   console.log("Received signup request with email:", email);
 
   try {
@@ -13,7 +13,12 @@ const signupUser = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    await createUser(email, password);
+    if (!email || !password || !organisation || !firstName || !lastName) {
+      console.log("Missing required fields in signup request.");
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    await createUser(email, password, organisation, firstName, lastName);
 
     console.log(`User ${email} created successfully.`);
     return res.status(201).json({ message: "User created successfully" });
