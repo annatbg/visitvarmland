@@ -1,37 +1,24 @@
 import React, { useEffect, useState } from "react";
 import useUser from "../store/useUser";
+import { fetchUserData } from "../hooks/api/userApi";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const ProfileUser = () => {
   const [userData, setUserData] = useState(null);
   const user = useUser((state) => state.user);
 
   useEffect(() => {
-    const apiUrl =
-      "https://4zhdfvr7u4.execute-api.eu-north-1.amazonaws.com/user/fetch";
-
-    const postData = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: user }),
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        console.log("Posted data response:", data);
+        const data = await fetchUserData(user, API_URL + "/user/fetch");
+        console.log("Fetched user data:", data);
         setUserData(data);
       } catch (error) {
-        console.error("Error posting data:", error);
+        console.error("Error fetching data in ProfileUser:", error);
       }
     };
 
-    postData();
+    fetchData();
   }, [user]);
 
   return (
