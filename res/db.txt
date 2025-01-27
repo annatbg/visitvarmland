@@ -1,0 +1,8 @@
+users
+
+email (PK) - String
+password - String
+firstName - String
+lastName - String
+organisation - String
+role - String
