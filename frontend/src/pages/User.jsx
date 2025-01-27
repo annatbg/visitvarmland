@@ -52,7 +52,7 @@ function User() {
                 onClick={handleLogout}
                 className="contentPage__user-logoutBTN"
               >
-                Logout2
+                Logout
               </button>
             </div>
             <PageNav setActiveView={setActiveView} activeView={activeView} />
