@@ -50,6 +50,8 @@ function Home() {
     e.preventDefault();
     try {
       const result = await loginUser(formData.email, formData.password);
+      const { token } = result;
+      localStorage.setItem("token", token);
       login(result.email, result.role);
       handleRedirect(result.role);
     } catch (error) {

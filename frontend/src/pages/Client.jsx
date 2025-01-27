@@ -18,6 +18,7 @@ function Client() {
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("token");
     navigate("/");
     console.log("Logged out");
   };
