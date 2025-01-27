@@ -17,6 +17,18 @@ function Home() {
   const navigate = useNavigate();
   const { login } = useUser();
 
+  const handleRedirect = (role) => {
+    if (role == "admin") {
+      navigate("/user/admin");
+    } else if (role == "coach") {
+      navigate("/user/coach");
+    } else if (role == "developer") {
+      navigate("/user/developer");
+    } else {
+      navigate("/user/client");
+    }
+  };
+
   const toggleForm = () => {
     setIsLogin(!isLogin);
     setFormData({
@@ -38,8 +50,8 @@ function Home() {
     e.preventDefault();
     try {
       const result = await loginUser(formData.email, formData.password);
-      login(result.email);
-      navigate("/user");
+      login(result.email, result.role);
+      handleRedirect(result.role);
     } catch (error) {
       alert(error.message || "An error occurred while logging in.");
     }

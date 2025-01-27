@@ -9,8 +9,9 @@ import ProfileUser from "../views/profileUser";
 import SettingsUser from "../views/settingsUser";
 import "./styles/UserPage.css";
 
-function User() {
+function Coach() {
   const user = useUser((state) => state.user);
+  const role = useUser((state) => state.role);
   const logout = useUser((state) => state.logout);
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState("home");
@@ -47,7 +48,9 @@ function User() {
           <MainHeader />
           <div className="contentPage">
             <div className="contentPage__user">
+              <h1>Coach-view</h1>
               <h2>Welcome {user}</h2>
+              <p>role: {role}</p>
               <button
                 onClick={handleLogout}
                 className="contentPage__user-logoutBTN"
@@ -65,4 +68,4 @@ function User() {
   );
 }
 
-export default User;
+export default Coach;
