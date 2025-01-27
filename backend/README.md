@@ -76,3 +76,5 @@ Now you can invoke the function as before, but this time the function will be ex
 When you are done developing, don't forget to run `serverless deploy` to deploy the function to the cloud.
 
 Update from frontend
+
+Update from top-folder
