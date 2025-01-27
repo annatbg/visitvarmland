@@ -18,12 +18,16 @@ function Coach() {
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("token");
     navigate("/");
     console.log("Logged out");
   };
 
   useEffect(() => {
     if (!user) {
+      navigate("/");
+    }
+    if (role !== "coach") {
       navigate("/");
     }
   }, [user, navigate]);

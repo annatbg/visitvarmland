@@ -27,6 +27,9 @@ function Client() {
     if (!user) {
       navigate("/");
     }
+    if (role !== "client") {
+      navigate("/");
+    }
   }, [user, navigate]);
 
   const renderView = () => {

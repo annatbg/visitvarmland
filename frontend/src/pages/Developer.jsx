@@ -18,12 +18,16 @@ function Developer() {
 
   const handleLogout = () => {
     logout();
+    localStorage.removeItem("token");
     navigate("/");
     console.log("Logged out");
   };
 
   useEffect(() => {
     if (!user) {
+      navigate("/");
+    }
+    if (role !== "developer") {
       navigate("/");
     }
   }, [user, navigate]);
