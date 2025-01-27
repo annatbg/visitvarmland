@@ -5,6 +5,8 @@ import PageNav from "../components/nav/PageNav/PageNav";
 import MainFooter from "../components/footer/mainFooter/MainFooter";
 import useUser from "../store/useUser";
 import HomeUser from "../views/homeUser";
+import MatchUser from "../views/matchUser";
+import DemandsUser from "../views/demandsUser";
 import ProfileUser from "../views/profileUser";
 import SettingsUser from "../views/settingsUser";
 import "./styles/UserPage.css";
@@ -40,6 +42,10 @@ function Client() {
         return <ProfileUser />;
       case "settings":
         return <SettingsUser />;
+      case "demands":
+        return <DemandsUser />;
+      case "match":
+        return <MatchUser />;
       default:
         return <HomeUser />;
     }
@@ -51,17 +57,6 @@ function Client() {
         <div className="userPage">
           <MainHeader />
           <div className="contentPage">
-            <div className="contentPage__user">
-              <h1>Client-view</h1>
-              <h2>Welcome {user}</h2>
-              <p>role: {role}</p>
-              <button
-                onClick={handleLogout}
-                className="contentPage__user-logoutBTN"
-              >
-                Logout
-              </button>
-            </div>
             <PageNav setActiveView={setActiveView} activeView={activeView} />
             {renderView()}
           </div>

@@ -18,10 +18,16 @@ function PageNav({ activeView, setActiveView }) {
           Profile
         </li>
         <li
-          className={activeView === "settings" ? "active" : ""}
-          onClick={() => setActiveView("settings")}
+          className={activeView === "demands" ? "active" : ""}
+          onClick={() => setActiveView("demands")}
         >
-          Settings
+          Demands
+        </li>
+        <li
+          className={activeView === "match" ? "active" : ""}
+          onClick={() => setActiveView("match")}
+        >
+          Match
         </li>
       </ul>
     </nav>
