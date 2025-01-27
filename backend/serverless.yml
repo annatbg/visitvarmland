@@ -28,3 +28,15 @@ resources:
           - AttributeName: email
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+
+    demands:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${env:DB_TABLE_DEMANDS}
+        AttributeDefinitions:
+          - AttributeName: demandId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: demandId
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
