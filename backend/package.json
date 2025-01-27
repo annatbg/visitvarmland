@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "gitupdate": "git add . && git commit -m 'update' && git push"
+  },
   "name": "vv5-v1",
   "version": "1.0.0",
   "description": "",

@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "gitupdate": "git add . && git commit -m 'update' && git push"
+  }
+}
