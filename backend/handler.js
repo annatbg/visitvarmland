@@ -25,7 +25,11 @@ app.use((req, res, next) => {
 // Routes
 app.post("/signup", userController.signupUser);
 app.post("/login", userController.loginUser);
+<<<<<<< HEAD
 app.post("/demand", demandController.createDemand);
+=======
+app.post("/user/fetch", userController.fetchUser);
+>>>>>>> 730453932f197898bc916cabfcd6fab718ca8a1a
 
 // Catch-all for 404 errors
 app.use(notFoundController.error);
