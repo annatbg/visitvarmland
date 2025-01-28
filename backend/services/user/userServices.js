@@ -2,6 +2,7 @@ require("dotenv").config();
 const { GetCommand, PutCommand } = require("@aws-sdk/lib-dynamodb");
 const db = require("../../services/db/db");
 const bcrypt = require("bcryptjs");
+const { v4: uuidv4 } = require("uuid");
 const TABLE_NAME = process.env.DB_TABLE_USERS;
 
 const userExists = async (email) => {
@@ -32,6 +33,7 @@ const createUser = async (
   console.log(`Password hashed for user ${email}`);
 
   const newUser = {
+    userId: uuidv4(),
     email,
     password: hashedPassword,
     organisation,
