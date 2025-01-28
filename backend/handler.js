@@ -6,6 +6,7 @@ app.use(express.json());
 // Import controllers (endpoint logic)
 const userController = require("./controllers/user/userController");
 const notFoundController = require("./controllers/notFoundController");
+const demandController = require("./controllers/demand/demandController");
 
 // CORS Middleware
 app.use((req, res, next) => {
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 // Routes
 app.post("/signup", userController.signupUser);
 app.post("/login", userController.loginUser);
+app.post("/demand", demandController.createDemand);
 
 // Catch-all for 404 errors
 app.use(notFoundController.error);

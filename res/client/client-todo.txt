@@ -1,14 +1,7 @@
 Client-page
 
-header
-flytta upp 
-username + log out till topNav
-
 footer
 uppdatera info
-
-pageNav
-uppdatera rubriker + views
 
 Profile
 Presentera uppgifter
