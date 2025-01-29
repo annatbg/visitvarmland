@@ -5,34 +5,40 @@ import useUser from "../store/useUser";
 
 function DemandsUser() {
   const [demand, setDemand] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const user = useUser((state) => state.user);
-
-  // Temporary placeholder for author
-  const author = user; // Replace with logic to get the logged-in user
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!demand) {
-      alert("Please enter a demand!");
+    if (!demand.trim()) {
+      setError("Please enter a valid demand.");
       return;
     }
+
+    if (!user) {
+      setError("User not found. Please log in.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
 
     const newDemand = {
       demandId: uuidv4(),
       demand,
-      author,
+      author: user,
       createdAt: new Date().toISOString(),
     };
 
     try {
-      const result = await createDemand(newDemand); // Call your API/database logic here
-      console.log("Demand created successfully:", result);
-
-      // Clear the input field after successful creation
+      await createDemand(newDemand);
       setDemand("");
     } catch (error) {
-      alert(error.message || "An error occurred while creating demand.");
+      setError(error.message || "An error occurred while creating the demand.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,12 +56,15 @@ function DemandsUser() {
           onChange={(e) => setDemand(e.target.value)}
           placeholder="Write your demand here..."
           className="border border-gray-300 rounded-lg p-2"
+          disabled={loading}
         />
+        {error && <p className="text-red-500">{error}</p>}
         <button
           type="submit"
-          className="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600"
+          className="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 disabled:opacity-50"
+          disabled={loading}
         >
-          Create Demand
+          {loading ? "Submitting..." : "Create Demand"}
         </button>
       </form>
     </div>
