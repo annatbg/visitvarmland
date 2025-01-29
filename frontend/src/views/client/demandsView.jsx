@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createDemand } from "../../hooks/api/authApi";
+import { createDemand } from "../../hooks/api/demandApi";
 import useUser from "../../store/useUser";
 
 const DemandsView = () => {
