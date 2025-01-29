@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import useUser from "../store/useUser";
-import { fetchUserData } from "../hooks/api/userApi";
+import useUser from "../../store/useUser";
+import { fetchUserData } from "../../hooks/api/userApi";
 const API_URL = import.meta.env.VITE_API_URL;
 
-const ProfileUser = () => {
+const ProfileView = () => {
   const [userData, setUserData] = useState(null);
   const user = useUser((state) => state.user);
 
@@ -39,4 +39,4 @@ const ProfileUser = () => {
   );
 };
 
-export default ProfileUser;
+export default ProfileView;

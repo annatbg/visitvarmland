@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser, signupUser } from "../hooks/api/authApi";
 import useUser from "../store/useUser";
 import "./styles/Home.css";
-import { loginUser, signupUser } from "../hooks/api/authApi";
 
 function Home() {
   const [isLogin, setIsLogin] = useState(true);
