@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createDemand } from "../hooks/api/authApi";
-import useUser from "../store/useUser";
+import { createDemand } from "../../hooks/api/authApi";
+import useUser from "../../store/useUser";
 
-function DemandsUser() {
+const DemandsView = () => {
   const [demand, setDemand] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -69,6 +69,6 @@ function DemandsUser() {
       </form>
     </div>
   );
-}
+};
 
-export default DemandsUser;
+export default DemandsView;

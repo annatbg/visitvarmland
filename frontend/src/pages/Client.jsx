@@ -4,26 +4,17 @@ import MainHeader from "../components/header/mainHeader/MainHeader";
 import PageNav from "../components/nav/PageNav/PageNav";
 import MainFooter from "../components/footer/mainFooter/MainFooter";
 import useUser from "../store/useUser";
-import HomeUser from "../views/homeUser";
-import MatchUser from "../views/matchUser";
-import DemandsUser from "../views/demandsUser";
-import ProfileUser from "../views/profileUser";
-import SettingsUser from "../views/settingsUser";
-import "./styles/UserPage.css";
+import HomeView from "../views/client/homeView";
+import DemandsView from "../views/client/demandsView";
+import MatchView from "../views/client/matchView";
+import ProfileView from "../views/client/profileView";
+import "./styles/ClientPage.css";
 
 function Client() {
   const user = useUser((state) => state.user);
   const role = useUser((state) => state.role);
-  const logout = useUser((state) => state.logout);
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState("home");
-
-  const handleLogout = () => {
-    logout();
-    localStorage.removeItem("token");
-    navigate("/");
-    console.log("Logged out");
-  };
 
   useEffect(() => {
     if (!user) {
@@ -37,29 +28,25 @@ function Client() {
   const renderView = () => {
     switch (activeView) {
       case "home":
-        return <HomeUser />;
+        return <HomeView />;
       case "profile":
-        return <ProfileUser />;
-      case "settings":
-        return <SettingsUser />;
-      case "demands":
-        return <DemandsUser />;
+        return <ProfileView />;
       case "match":
-        return <MatchUser />;
+        return <MatchView />;
+      case "demands":
+        return <DemandsView />;
       default:
-        return <HomeUser />;
+        return <HomeView />;
     }
   };
 
   return (
     <>
       {user && (
-        <div className="userPage">
+        <div className="clientPage">
           <MainHeader />
-          <div className="contentPage">
-            <PageNav setActiveView={setActiveView} activeView={activeView} />
-            {renderView()}
-          </div>
+          <PageNav setActiveView={setActiveView} activeView={activeView} />
+          <div className="contentPage">{renderView()}</div>
           <MainFooter />
         </div>
       )}

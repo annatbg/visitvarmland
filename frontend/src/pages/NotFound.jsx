@@ -2,7 +2,7 @@ import React from "react";
 
 function NotFound() {
   return (
-    <div style={{ padding: "20px" }}>
+    <div>
       <h1>NotFound</h1>
       <p>
         This is the content of the <strong>NotFound</strong> component. Replace
