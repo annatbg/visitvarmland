@@ -1,6 +1,6 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const loginUser = async (email, password) => {
+const loginUser = async (email, password) => {
   try {
     const response = await fetch(API_URL + "/login", {
       method: "POST",
@@ -18,7 +18,7 @@ export const loginUser = async (email, password) => {
   }
 };
 
-export const signupUser = async (formData) => {
+const signupUser = async (formData) => {
   try {
     const response = await fetch(API_URL + "/signup", {
       method: "POST",
@@ -36,7 +36,7 @@ export const signupUser = async (formData) => {
   }
 };
 
-export const createDemand = async (formData) => {
+const createDemand = async (formData) => {
   try {
     const response = await fetch(API_URL + "/demand", {
       method: "POST",
@@ -55,3 +55,5 @@ export const createDemand = async (formData) => {
     );
   }
 };
+
+export { loginUser, signupUser, createDemand };
