@@ -36,4 +36,4 @@ const signupUser = async (formData) => {
   }
 };
 
-export { loginUser, signupUser, createDemand };
+export { loginUser, signupUser };

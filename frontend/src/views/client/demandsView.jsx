@@ -1,40 +1,50 @@
 import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { createDemand } from "../../hooks/api/demandApi";
 import useUser from "../../store/useUser";
+import "./styles/DEmandsView.css";
 
 const DemandsView = () => {
-  const [demand, setDemand] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    demand: "",
+    category: "",
+  });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
   const user = useUser((state) => state.user);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!demand.trim()) {
-      setError("Please enter a valid demand.");
+    if (
+      !formData.title.trim() ||
+      !formData.demand.trim() ||
+      !formData.category.trim()
+    ) {
+      setError("All fields are required.");
+      setSuccessMessage(null);
       return;
     }
 
     if (!user) {
       setError("User not found. Please log in.");
+      setSuccessMessage(null);
       return;
     }
 
     setLoading(true);
     setError(null);
-
-    const newDemand = {
-      demandId: uuidv4(),
-      demand,
-      author: user,
-      createdAt: new Date().toISOString(),
-    };
+    setSuccessMessage(null);
 
     try {
-      await createDemand(newDemand);
-      setDemand("");
+      await createDemand({ ...formData, author: user });
+      setFormData({ title: "", demand: "", category: "" });
+      setSuccessMessage("Demand created successfully!");
     } catch (error) {
       setError(error.message || "An error occurred while creating the demand.");
     } finally {
@@ -43,27 +53,53 @@ const DemandsView = () => {
   };
 
   return (
-    <div className="homeView">
-      <h1>Demands View</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <label htmlFor="demand" className="text-lg font-medium">
-          Enter your demand:
+    <div className="demandview-container">
+      <h1 className="demandview-title">Create Demand</h1>
+      <form onSubmit={handleSubmit} className="demandview-form">
+        <label htmlFor="title" className="demandview-label">
+          Title:
+        </label>
+        <input
+          type="text"
+          id="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Enter a title"
+          className="demandview-input"
+          disabled={loading}
+        />
+
+        <label htmlFor="demand" className="demandview-label">
+          Demand:
         </label>
         <input
           type="text"
           id="demand"
-          value={demand}
-          onChange={(e) => setDemand(e.target.value)}
+          value={formData.demand}
+          onChange={handleChange}
           placeholder="Write your demand here..."
-          className="border border-gray-300 rounded-lg p-2"
+          className="demandview-input"
           disabled={loading}
         />
-        {error && <p className="text-red-500">{error}</p>}
-        <button
-          type="submit"
-          className="bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 disabled:opacity-50"
+
+        <label htmlFor="category" className="demandview-label">
+          Category:
+        </label>
+        <input
+          type="text"
+          id="category"
+          value={formData.category}
+          onChange={handleChange}
+          placeholder="Enter category"
+          className="demandview-input"
           disabled={loading}
-        >
+        />
+
+        {error && <p className="demandview-error">{error}</p>}
+        {successMessage && (
+          <p className="demandview-success">{successMessage}</p>
+        )}
+        <button type="submit" className="demandview-button" disabled={loading}>
           {loading ? "Submitting..." : "Create Demand"}
         </button>
       </form>
