@@ -1,4 +1,3 @@
-// src/components/DemandForm.js
 import React, { useState } from "react";
 import { createDemand } from "../../../hooks/api/demandApi";
 import useUser from "../../../store/useUser";
@@ -54,52 +53,57 @@ const CreateDemand = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="demandview-form">
-      <label htmlFor="title" className="demandview-label">
-        Title:
-      </label>
-      <input
-        type="text"
-        id="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Enter a title"
-        className="demandview-input"
-        disabled={loading}
-      />
+    <>
+      <h3>Create Demand</h3>
+      <form onSubmit={handleSubmit} className="demandview-form">
+        <label htmlFor="title" className="demandview-label">
+          Title:
+        </label>
+        <input
+          type="text"
+          id="title"
+          value={formData.title}
+          onChange={handleChange}
+          placeholder="Enter a title"
+          className="demandview-input"
+          disabled={loading}
+        />
 
-      <label htmlFor="demand" className="demandview-label">
-        Demand:
-      </label>
-      <input
-        type="text"
-        id="demand"
-        value={formData.demand}
-        onChange={handleChange}
-        placeholder="Write your demand here..."
-        className="demandview-input"
-        disabled={loading}
-      />
+        <label htmlFor="demand" className="demandview-label">
+          Demand:
+        </label>
+        <input
+          type="text"
+          id="demand"
+          value={formData.demand}
+          onChange={handleChange}
+          placeholder="Write your demand here..."
+          className="demandview-input"
+          disabled={loading}
+        />
 
-      <label htmlFor="category" className="demandview-label">
-        Category:
-      </label>
-      <input
-        type="text"
-        id="category"
-        value={formData.category}
-        onChange={handleChange}
-        placeholder="Enter category"
-        className="demandview-input"
-        disabled={loading}
-      />
+        <label htmlFor="category" className="demandview-label">
+          Category:
+        </label>
+        <input
+          type="text"
+          id="category"
+          value={formData.category}
+          onChange={handleChange}
+          placeholder="Enter category"
+          className="demandview-input"
+          disabled={loading}
+        />
 
-      {error && <p className="demandview-error">{error}</p>}
-      {successMessage && <p className="demandview-success">{successMessage}</p>}
-      <button type="submit" className="demandview-button" disabled={loading}>
-        {loading ? "Submitting..." : "Create Demand"}
-      </button>
-    </form>
+        {error && <p className="demandview-error">{error}</p>}
+        {successMessage && (
+          <p className="demandview-success">{successMessage}</p>
+        )}
+        <button type="submit" className="demandview-button" disabled={loading}>
+          {loading ? "Submitting..." : "Create Demand"}
+        </button>
+      </form>
+    </>
   );
 };
 
