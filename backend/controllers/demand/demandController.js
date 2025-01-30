@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
-const db = require("../../services/db/db"); // Import the DynamoDB connection
+const db = require("../../services/db/db");
 const { PutCommand } = require("@aws-sdk/lib-dynamodb");
 const DEMANDS_TABLE = process.env.DB_TABLE_DEMANDS;
 
