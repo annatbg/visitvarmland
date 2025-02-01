@@ -1,0 +1,63 @@
+.demandForm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.demandForm-label {
+  font-weight: 500;
+}
+
+.demandForm-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.demandForm-input:disabled {
+  background-color: #e0e0e0;
+}
+
+.demandForm-button {
+  background-color: #333;
+  color: white;
+  font-size: 16px;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.demandForm-button:hover {
+  background-color: #00b318;
+}
+
+.demandForm-button:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.demandForm-error {
+  color: red;
+  font-size: 14px;
+  text-align: center;
+}
+
+.demandForm-success {
+  color: green;
+  font-size: 14px;
+  text-align: center;
+}
+
+.demandForm-heading {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.demandForm-arrow {
+  margin-left: 8px;
+  transition: transform 0.3s ease-in-out;
+}
