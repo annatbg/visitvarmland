@@ -1,26 +1,26 @@
-.demandview-form {
+.demandForm-form {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.demandview-label {
+.demandForm-label {
   font-weight: 500;
 }
 
-.demandview-input {
+.demandForm-input {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 6px;
   font-size: 16px;
 }
 
-.demandview-input:disabled {
+.demandForm-input:disabled {
   background-color: #e0e0e0;
 }
 
-.demandview-button {
-  background-color: #007bff;
+.demandForm-button {
+  background-color: #333;
   color: white;
   font-size: 16px;
   padding: 10px;
@@ -30,23 +30,34 @@
   transition: background 0.3s;
 }
 
-.demandview-button:hover {
-  background-color: #0056b3;
+.demandForm-button:hover {
+  background-color: #00b318;
 }
 
-.demandview-button:disabled {
+.demandForm-button:disabled {
   background-color: #a0a0a0;
   cursor: not-allowed;
 }
 
-.demandview-error {
+.demandForm-error {
   color: red;
   font-size: 14px;
   text-align: center;
 }
 
-.demandview-success {
+.demandForm-success {
   color: green;
   font-size: 14px;
   text-align: center;
+}
+
+.demandForm-heading {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.demandForm-arrow {
+  margin-left: 8px;
+  transition: transform 0.3s ease-in-out;
 }
