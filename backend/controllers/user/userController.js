@@ -49,6 +49,8 @@ const loginUser = async (req, res) => {
       token,
       email,
       role: user.role,
+      firstName: user.firstName,
+      lastName: user.lastName,
     });
   } catch (err) {
     console.error("Error in login:", err);

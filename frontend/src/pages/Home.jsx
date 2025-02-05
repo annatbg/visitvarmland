@@ -52,7 +52,7 @@ function Home() {
       const result = await loginUser(formData.email, formData.password);
       const { token } = result;
       localStorage.setItem("token", token);
-      login(result.email, result.role);
+      login(result.email, result.role, result.firstName, result.lastName);
       handleRedirect(result.role);
     } catch (error) {
       alert(error.message || "An error occurred while logging in.");
