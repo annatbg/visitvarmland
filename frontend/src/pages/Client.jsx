@@ -12,18 +12,8 @@ import "./styles/ClientPage.css";
 
 function Client() {
   const user = useUser((state) => state.user);
-  const role = useUser((state) => state.role);
   const navigate = useNavigate();
   const [activeView, setActiveView] = useState("home");
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/");
-    }
-    if (role !== "client") {
-      navigate("/");
-    }
-  }, [user, navigate]);
 
   const renderView = () => {
     switch (activeView) {

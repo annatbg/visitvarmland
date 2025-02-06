@@ -8,6 +8,7 @@ const CreateDemand = () => {
     title: "",
     demand: "",
     category: "",
+    author: "",
   });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -26,7 +27,8 @@ const CreateDemand = () => {
     if (
       !formData.title.trim() ||
       !formData.demand.trim() ||
-      !formData.category.trim()
+      !formData.category.trim() ||
+      !formData.author.trim()
     ) {
       setError("All fields are required.");
       setSuccessMessage(null);
@@ -44,8 +46,8 @@ const CreateDemand = () => {
     setSuccessMessage(null);
 
     try {
-      await createDemand({ ...formData, author: user });
-      setFormData({ title: "", demand: "", category: "" });
+      await createDemand({ formData });
+      setFormData({ title: "", demand: "", category: "", author: "" });
       setSuccessMessage("Demand created successfully!");
     } catch (error) {
       setError(error.message || "An error occurred while creating the demand.");
@@ -101,6 +103,19 @@ const CreateDemand = () => {
             value={formData.category}
             onChange={handleChange}
             placeholder="Vilken kategori tillhör ditt behov"
+            className="demandForm-input"
+            disabled={loading}
+          />
+
+          <label htmlFor="author" className="demandForm-label">
+            Författare:
+          </label>
+          <input
+            type="text"
+            id="author"
+            value={formData.author}
+            onChange={handleChange}
+            placeholder="Ditt namn"
             className="demandForm-input"
             disabled={loading}
           />

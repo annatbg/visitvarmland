@@ -1,12 +1,20 @@
+import useUser from "../../store/useUser";
 const API_URL = import.meta.env.VITE_API_URL;
 
 const createDemand = async (formData) => {
   try {
-    const response = await fetch(API_URL + "/demand", {
+    const token = useUser.getState().token;
+    const user = useUser.getState().user;
+
+    const response = await fetch(`${API_URL}/demand`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData.formData),
     });
+
     const result = await response.json();
     if (response.ok) {
       return result;
@@ -15,7 +23,7 @@ const createDemand = async (formData) => {
     }
   } catch (error) {
     throw new Error(
-      "An error occurred while creating demand: " + error.message
+      `An error occurred while creating demand: ${error.message}`
     );
   }
 };

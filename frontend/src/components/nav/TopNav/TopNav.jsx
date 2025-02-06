@@ -4,8 +4,7 @@ import "./TopNav.css";
 import useUser from "../../../store/useUser";
 
 const TopNav = () => {
-  const userFirstName = useUser((state) => state.firstName);
-  const userLastName = useUser((state) => state.lastName);
+  const user = useUser((state) => state.user);
   const logout = useUser((state) => state.logout);
 
   const handleLogout = () => {
@@ -19,7 +18,7 @@ const TopNav = () => {
     <nav className="topNav">
       <ul className="nav-list">
         <li className="nav-item">
-          {userFirstName} {userLastName}
+          {user.firstName} {user.lastName}
         </li>
         <li className="nav-item">
           <button
