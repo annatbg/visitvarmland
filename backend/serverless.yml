@@ -36,7 +36,16 @@ resources:
         AttributeDefinitions:
           - AttributeName: demandId
             AttributeType: S
+          - AttributeName: author
+            AttributeType: S
         KeySchema:
           - AttributeName: demandId
             KeyType: HASH
         BillingMode: PAY_PER_REQUEST
+        GlobalSecondaryIndexes:
+          - IndexName: author-index
+            KeySchema:
+              - AttributeName: author
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL

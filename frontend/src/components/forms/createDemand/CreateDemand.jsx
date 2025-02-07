@@ -44,7 +44,7 @@ const CreateDemand = () => {
     setSuccessMessage(null);
 
     try {
-      await createDemand({ ...formData, author: user });
+      await createDemand({ formData });
       setFormData({ title: "", demand: "", category: "" });
       setSuccessMessage("Demand created successfully!");
     } catch (error) {

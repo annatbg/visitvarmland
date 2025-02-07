@@ -1,13 +1,20 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-const useUser = create((set) => ({
-  user: null,
-  role: null,
+const useUser = create(
+  persist(
+    (set) => ({
+      user: null,
+      token: null,
 
-  login: (userData, userRole) =>
-    set(() => ({ user: userData, role: userRole })),
-
-  logout: () => set(() => ({ user: null, role: null })),
-}));
+      login: (userData, userToken) =>
+        set(() => ({ user: userData, token: userToken })),
+      logout: () => set(() => ({ user: null, token: null })),
+    }),
+    {
+      name: "zustand-user",
+    }
+  )
+);
 
 export default useUser;

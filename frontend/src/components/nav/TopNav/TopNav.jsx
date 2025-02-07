@@ -17,7 +17,9 @@ const TopNav = () => {
   return (
     <nav className="topNav">
       <ul className="nav-list">
-        <li className="nav-item">{user}</li>
+        <li className="nav-item">
+          {user.firstName} {user.lastName}
+        </li>
         <li className="nav-item">
           <button
             onClick={handleLogout}

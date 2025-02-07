@@ -2,6 +2,7 @@ const serverless = require("serverless-http");
 const express = require("express");
 const app = express();
 app.use(express.json());
+const { auth } = require("./services/utils/auth");
 
 // Import controllers (endpoint logic)
 const userController = require("./controllers/user/userController");
@@ -25,7 +26,8 @@ app.use((req, res, next) => {
 // Routes
 app.post("/signup", userController.signupUser);
 app.post("/login", userController.loginUser);
-app.post("/demand", demandController.createDemand);
+app.post("/demand", auth, demandController.createDemand);
+app.get("/demand", auth, demandController.fetchMyDemands);
 app.post("/user/fetch", userController.fetchUser);
 
 // Catch-all for 404 errors
