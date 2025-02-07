@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 app.post("/signup", userController.signupUser);
 app.post("/login", userController.loginUser);
 app.post("/demand", auth, demandController.createDemand);
+app.get("/demand", auth, demandController.fetchMyDemands);
 app.post("/user/fetch", userController.fetchUser);
 
 // Catch-all for 404 errors
