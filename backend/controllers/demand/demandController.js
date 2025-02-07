@@ -5,7 +5,8 @@ const DEMANDS_TABLE = process.env.DB_TABLE_DEMANDS;
 
 const createDemand = async (req, res) => {
   try {
-    const { author, title, demand, category } = req.body;
+    const author = req.user.username;
+    const { title, demand, category } = req.body;
 
     if (!author || !title || !demand || !category) {
       return res.status(400).json({ message: "All fields are required!" });

@@ -6,6 +6,9 @@ const createDemand = async (formData) => {
     const token = useUser.getState().token;
     const user = useUser.getState().user;
 
+    console.log("data", formData.formData);
+    console.log("token", token);
+
     const response = await fetch(`${API_URL}/demand`, {
       method: "POST",
       headers: {
