@@ -1,78 +1,39 @@
-const { v4: uuidv4 } = require("uuid");
-const db = require("../../services/db/db");
-const { PutCommand, QueryCommand } = require("@aws-sdk/lib-dynamodb");
-const DEMANDS_TABLE = process.env.DB_TABLE_DEMANDS;
+const serverless = require("serverless-http");
+const express = require("express");
+const app = express();
+app.use(express.json());
+const { auth } = require("./services/utils/auth");
 
-const createDemand = async (req, res) => {
-  try {
-    const author = req.user.username;
-    const { title, demand, category } = req.body;
+// Import controllers (endpoint logic)
+const userController = require("./controllers/user/userController");
+const notFoundController = require("./controllers/notFoundController");
+const demandController = require("./controllers/demand/demandController");
 
-    if (!author || !title || !demand || !category) {
-      return res.status(400).json({ message: "All fields are required!" });
-    }
-
-    const newDemand = {
-      demandId: uuidv4(),
-      author,
-      title,
-      demand,
-      category,
-      createdAt: new Date().toISOString(),
-    };
-
-    const params = {
-      TableName: DEMANDS_TABLE,
-      Item: newDemand,
-    };
-
-    await db.send(new PutCommand(params));
-
-    res.status(201).json({
-      message: "Demand created successfully!",
-      data: newDemand,
-    });
-  } catch (error) {
-    console.error("Error creating demand:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+// CORS Middleware
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
   }
-};
+  next();
+});
 
-const fetchMyDemands = async (req, res) => {
-  try {
-    const author = req.user?.username;
+// Routes
+app.post("/signup", userController.signupUser);
+app.post("/login", userController.loginUser);
+app.post("/demand", auth, demandController.createDemand);
+app.get("/demand", auth, demandController.fetchMyDemands);
+app.get("/demands/all", demandController.fetchAllDemands);
+app.delete("/demand/:demandId", auth, demandController.deleteDemand);
 
-    if (!author) {
-      console.error("User not authenticated, req.user:", req.user);
-      return res.status(400).json({ message: "User not authenticated" });
-    }
+app.post("/user/fetch", userController.fetchUser);
 
-    const params = {
-      TableName: DEMANDS_TABLE,
-      IndexName: "author-index", // GSI -- needs to be added in AWS
-      KeyConditionExpression: "author = :author",
-      ExpressionAttributeValues: {
-        ":author": author,
-      },
-    };
+// Catch-all for 404 errors
+app.use(notFoundController.error);
 
-    const { Items } = await db.send(new QueryCommand(params));
-
-    if (!Items || Items.length === 0) {
-      console.error(`No demands found for author: ${author}`);
-      return res
-        .status(404)
-        .json({ message: "No demands found for this author." });
-    }
-
-    res.status(200).json({
-      message: "Demands retrieved successfully!",
-      data: Items,
-    });
-  } catch (error) {
-    console.error("Error fetching demands:", error);
-    console.error("Stack Trace:", error.stack);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-};
-module.exports = { createDemand, fetchMyDemands };
+exports.handler = serverless(app);
